@@ -12,6 +12,13 @@ ATTR{capacity}=="1[0-9]", \
 IMPORT{program}="/usr/bin/xpub", \
 RUN+="/bin/su $env{XUSER} -c 'notify-send -u normal -i battery-caution \"Battery status\" \"Battery is getting low at $attr{capacity}%\"'"
 
+ACTION=="change", KERNEL=="BAT[0-9]", \
+SUBSYSTEM=="power_supply", \
+ATTR{status}=="Charging", \
+ATTR{capacity}=="8[5-9]", \
+IMPORT{program}="/usr/bin/xpub", \
+RUN+="/bin/su $env{XUSER} -c 'notify-send -u normal -i battery-caution \"Battery status\" \"Battery at $attr{capacity}%, you should unplug!\"'"
+
 SUBSYSTEM=="power_supply", ACTION=="change", \
 ENV{POWER_SUPPLY_ONLINE}=="0", ENV{POWER}="off", \
 OPTIONS+="last_rule", \
